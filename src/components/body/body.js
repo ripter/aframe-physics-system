@@ -42,6 +42,7 @@ var Body = {
     var pos = obj.position;
     var quat = obj.quaternion;
 
+    console.log('setting to CANNON body');
     this.body = new CANNON.Body({
       mass: data.type === 'static' ? 0 : data.mass || 0,
       material: this.system.getMaterial('defaultMaterial'),

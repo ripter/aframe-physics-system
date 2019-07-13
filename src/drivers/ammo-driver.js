@@ -48,7 +48,7 @@ AmmoDriver.prototype.init = function(worldConfig) {
         this.solver,
         this.collisionConfiguration
       );
-      this.physicsWorld.setForceUpdateAllAabbs(false);
+      // this.physicsWorld.setForceUpdateAllAabbs(false);
       this.physicsWorld.setGravity(
         new Ammo.btVector3(0, worldConfig.hasOwnProperty("gravity") ? worldConfig.gravity : -9.8, 0)
       );
@@ -109,12 +109,9 @@ AmmoDriver.prototype.step = function(deltaTime) {
       }
       if (this.collisions.get(body0ptr).indexOf(body1ptr) === -1) {
         this.collisions.get(body0ptr).push(body1ptr);
-        if (this.eventListeners.indexOf(body0ptr) !== -1) {
-          this.els.get(body0ptr).emit("collidestart", { targetEl: this.els.get(body1ptr) });
-        }
-        if (this.eventListeners.indexOf(body1ptr) !== -1) {
-          this.els.get(body1ptr).emit("collidestart", { targetEl: this.els.get(body0ptr) });
-        }
+        // emit the collide start event on both bodies
+        this.els.get(body0ptr).emit('collidestart', { targetEl: this.els.get(body1ptr) });
+        this.els.get(body1ptr).emit('collidestart', { targetEl: this.els.get(body0ptr) });
       }
       if (!this.currentCollisions.has(body0ptr)) {
         this.currentCollisions.set(body0ptr, new Set());
@@ -131,12 +128,9 @@ AmmoDriver.prototype.step = function(deltaTime) {
       if (this.currentCollisions.get(body0ptr).has(body1ptr)) {
         continue;
       }
-      if (this.eventListeners.indexOf(body0ptr) !== -1) {
-        this.els.get(body0ptr).emit("collideend", { targetEl: this.els.get(body1ptr) });
-      }
-      if (this.eventListeners.indexOf(body1ptr) !== -1) {
-        this.els.get(body1ptr).emit("collideend", { targetEl: this.els.get(body0ptr) });
-      }
+      // emit the collide end event on both bodies
+      this.els.get(body0ptr).emit('collideend', { targetEl: this.els.get(body1ptr) });
+      this.els.get(body1ptr).emit('collideend', { targetEl: this.els.get(body0ptr) });
       body1ptrs.splice(j, 1);
     }
     this.currentCollisions.get(body0ptr).clear();

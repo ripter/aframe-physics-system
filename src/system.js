@@ -41,7 +41,7 @@ module.exports = AFRAME.registerSystem('physics', {
 
     // If using ammo, set the default rendering mode for debug
     debugDrawMode: { default: THREE.AmmoDebugConstants.NoDebug },
-    // If using ammo, set the max number of steps per frame 
+    // If using ammo, set the max number of steps per frame
     maxSubSteps: { default: 4 },
     // If using ammo, set the framerate of the simulation
     fixedTimeStep: { default: 1 / 60 }
@@ -149,7 +149,7 @@ module.exports = AFRAME.registerSystem('physics', {
     }
 
     this.driver.step(Math.min(dt / 1000, this.data.maxInterval));
-    
+
     for (i = 0; i < callbacks.step.length; i++) {
       callbacks.step[i].step(t, dt);
     }
