@@ -54,11 +54,12 @@ var AmmoShape = {
       return;
     }
     if (this.data.fit !== FIT.MANUAL) {
-      if (!this.el.object3DMap.mesh) {
+      const mesh = this.el.getObject3D('mesh');
+      if (!mesh) {
         console.error("Cannot use FIT.ALL without object3DMap.mesh");
         return;
       }
-      this.mesh = this.el.object3DMap.mesh;
+      this.mesh = mesh;
     }
     this.body.addShapeComponent(this);
   },
