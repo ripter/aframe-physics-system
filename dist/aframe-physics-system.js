@@ -17782,7 +17782,7 @@ var AmmoShape = {
 
   multiple: true,
 
-  init: function() {
+  play: function() {
     this.system = this.el.sceneEl.systems.physics;
     this.collisionShapes = [];
 
