@@ -18215,6 +18215,7 @@ AmmoDriver.prototype.updateBody = function(body) {
 AmmoDriver.prototype.step = function(deltaTime) {
   this.physicsWorld.stepSimulation(deltaTime, this.maxSubSteps, this.fixedTimeStep);
 
+  // Ammo way to loop over all the collisions.
   const numManifolds = this.dispatcher.getNumManifolds();
   for (let i = 0; i < numManifolds; i++) {
     const persistentManifold = this.dispatcher.getManifoldByIndexInternal(i);
@@ -18244,16 +18245,6 @@ AmmoDriver.prototype.step = function(deltaTime) {
           this.els.get(body0ptr).emit('collidestart', { targetEl: this.els.get(body1ptr) });
           this.els.get(body1ptr).emit('collidestart', { targetEl: this.els.get(body0ptr) });
         }
-        /*
-        if (this.els.has(body0ptr)) {
-          // console.log('body0ptr', this.els.get(body0ptr));
-          this.els.get(body0ptr).emit('collidestart', { targetEl: this.els.get(body1ptr) });
-        }
-        if (this.els.has(body1ptr)) {
-          // console.log('body1ptr', this.els.get(body1ptr));
-          this.els.get(body1ptr).emit('collidestart', { targetEl: this.els.get(body0ptr) });
-        }
-        */
       }
       if (!this.currentCollisions.has(body0ptr)) {
         this.currentCollisions.set(body0ptr, new Set());
@@ -18275,14 +18266,6 @@ AmmoDriver.prototype.step = function(deltaTime) {
         this.els.get(body0ptr).emit('collideend', { targetEl: this.els.get(body1ptr) });
         this.els.get(body1ptr).emit('collideend', { targetEl: this.els.get(body0ptr) });
       }
-      /*
-      if (this.els.has(body0ptr)) {
-        this.els.get(body0ptr).emit('collideend', { targetEl: this.els.get(body1ptr) });
-      }
-      if (this.els.has(body1ptr)) {
-        this.els.get(body1ptr).emit('collideend', { targetEl: this.els.get(body0ptr) });
-      }
-      */
       body1ptrs.splice(j, 1);
     }
     this.currentCollisions.get(body0ptr).clear();
